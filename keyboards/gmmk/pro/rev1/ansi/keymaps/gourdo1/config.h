@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Caps Word configuration
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
-//#define CAPS_WORD_IDLE_TIMEOUT 10000      // Automatically turn off after x milliseconds of idle. 0 to never timeout.
+#define CAPS_WORD_IDLE_TIMEOUT 10000      // Automatically turn off after x milliseconds of idle. 0 to never timeout.
 
 // Handle GRAVESC combo keys
 #define GRAVE_ESC_ALT_OVERRIDE
