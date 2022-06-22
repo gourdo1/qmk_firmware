@@ -55,6 +55,8 @@ enum custom_user_keycodes {
         RGB_TOD,       // Timeout idle time down
         RGB_NITE,      // Turns off all rgb but allow rgb indicators to work
 
+        TOG_CAPS,      // Toggles RGB highlighting of alphas during capslock
+
         YAHOO,         // yahoo.com
         OUTLOOK,       // outlook.com
         GMAIL,         // gmail.com

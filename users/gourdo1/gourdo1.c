@@ -132,6 +132,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
     // Key macros ...
     switch (keycode) {
 
+        // User configuration toggles
+    case TOG_CAPS:  // Toggle RGB highlighting of Capslock state
+        if (record->event.pressed) {
+            user_config.rgb_hilite_caps ^= 1; // Toggles the status
+            eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+        }
+        break;
+        //return false;
+
         // DotCom domain macros
     case DOTCOM:
         if (record -> event.pressed) {
@@ -398,4 +407,7 @@ void keyboard_post_init_user(void) {
     #ifdef IDLE_TIMEOUT_ENABLE
     timeout_timer = timer_read(); // set initial time for idle timeout
     #endif
+    // Read the user config from EEPROM
+    user_config.raw = eeconfig_read_user();
+    rgb_hilite_caps        = user_config.rgb_hilite_caps;
 }
