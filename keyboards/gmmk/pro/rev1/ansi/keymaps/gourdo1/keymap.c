@@ -28,31 +28,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <math.h>
 
-// Set up boolean variables to track several user customizable configuration options
-typedef union {
-  uint32_t raw;
-  struct {
-    bool     rgb_hilite_caps :1;
-    bool     rgb_hilite_numpad :1;
-    bool     double_tap_shift_for_capslock :1;
-    bool     del_right_home_top :1;
-    bool     encoder_press_mute_or_media :1;
-    bool     esc_double_tap_to_baselyr :1;
-    bool     ins_on_shft_bkspc_or_del :1;
-  };
-} user_config_t;
-
-user_config_t user_config;
-static bool     rgb_hilite_caps       = true;
-
-/* Set default values for the EEPROM */
-void eeconfig_init_user(void) {
-    user_config.raw        = 0;
-    user_config.rgb_hilite_caps   = false;
-    eeconfig_update_user(user_config.raw);
-    rgb_hilite_caps   = false;
-}
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Base Layout
@@ -73,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
 
     [_BASE] = LAYOUT(
-        KC_ESCLYR, KC_F1, KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_HOME,          KC_MUTE,
+        KC_ESCLYR, KC_F1, KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_HOME,          ENCFUNC,
         KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,          KC_DEL,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,          KC_PGUP,
         TT(_NUMPADMOUSE), KC_A, KC_S, KC_D, KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,           KC_PGDN,
@@ -101,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     #ifdef GAME_ENABLE
     [_FN1] = LAYOUT(
         EE_CLR,  KC_MYCM, KC_WHOM, KC_CALC, KC_MSEL, KC_MPRV, KC_MNXT, KC_MPLY, KC_MSTP, KC_VOLD, KC_VOLU, KC_PSCR, KC_SLCK, KC_PAUS,           KC_SLEP,
-        _______, TOG_CAPS, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_TOD, RGB_TOI, _______,           RGB_TOG,
+        _______, TOG_CAPS, _______, _______, _______, TOG_ENC, _______, _______, _______, _______, _______, RGB_TOD, RGB_TOI, _______,           RGB_TOG,
         _______, RGB_SAD, RGB_VAI, RGB_SAI, NK_TOGG, _______, YAHOO,   _______, _______, OUTLOOK, TG(_GAME),SWAP_L, SWAP_R,  RESET,             KC_HOME,
         KC_CAPS, RGB_HUD, RGB_VAD, RGB_HUI, _______, GMAIL,   HOTMAIL, _______, _______, LOCKPC,  _______, _______,          _______,           KC_END,
         _______,          RGB_NITE,_______, _______, _______, _______, KC_NLCK, _______, _______, DOTCOM,  KC_CAD,           _______, RGB_MOD,  _______,
@@ -298,8 +273,8 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     #endif // INVERT_NUMLOCK_INDICATOR
 
     // CapsLock RGB setup
-    if (user_config.rgb_hilite_caps) {
-        if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
+    if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
+        if (user_config.rgb_hilite_caps) {
             for (uint8_t i = 0; i < ARRAYSIZE(LED_LIST_LETTERS); i++) {
                 rgb_matrix_set_color(LED_LIST_LETTERS[i], RGB_CHARTREUSE);
             }
@@ -307,13 +282,11 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(LED_L8, RGB_CHARTREUSE);
             rgb_matrix_set_color(LED_LSFT, RGB_CHARTREUSE);
         }
-    else {
-        if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
+        else {
             rgb_matrix_set_color(LED_L7, RGB_CHARTREUSE);
             rgb_matrix_set_color(LED_L8, RGB_CHARTREUSE);
             rgb_matrix_set_color(LED_LSFT, RGB_CHARTREUSE);
         }
-    }
     }
 
     // Winkey disabled (gaming) mode RGB setup

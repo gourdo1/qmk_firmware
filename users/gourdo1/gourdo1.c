@@ -137,9 +137,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         if (record->event.pressed) {
             user_config.rgb_hilite_caps ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+            if (user_config.rgb_hilite_caps) {
+                SEND_STRING("Capslock Alpha RGB Mode ON");
+            } else {
+                SEND_STRING("Capslock Alpha RGB Mode OFF");
+            }
+        }
+        break;
+    case TOG_ENC:  // Toggle Encoder function
+        if (record->event.pressed) {
+            user_config.encoder_press_mute_or_media ^= 1; // Toggles the status
+            eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+            if (user_config.encoder_press_mute_or_media) {
+                SEND_STRING("Encoder Button Mutes");
+            } else {
+                SEND_STRING("Encoder Button Pauses/Plays Media");
+            }
         }
         break;
         //return false;
+
+        // Encoder button function
+    case ENCFUNC:
+        if (user_config.encoder_press_mute_or_media) {
+            if (record -> event.pressed) {
+                register_code(KC_MUTE);
+            } else unregister_code16(keycode);
+        }
+        else {
+            if (record -> event.pressed) {
+            register_code(KC_MPLY);
+            } else unregister_code16(keycode);
+        }
+        break;
 
         // DotCom domain macros
     case DOTCOM:
@@ -397,9 +427,12 @@ void activate_numlock(bool turn_on) {
 }
 
 // INITIAL STARTUP
-__attribute__((weak)) void keyboard_post_init_keymap(void) {}
+__attribute__((weak)) void keyboard_post_init_keymap(void) {
+}
 
 void keyboard_post_init_user(void) {
+    // Read the user config from EEPROM
+    user_config.raw = eeconfig_read_user();
     keyboard_post_init_keymap();
     #ifdef STARTUP_NUMLOCK_ON
     activate_numlock(true); // turn on Num lock by default so that the numpad layer always has predictable results
@@ -407,7 +440,12 @@ void keyboard_post_init_user(void) {
     #ifdef IDLE_TIMEOUT_ENABLE
     timeout_timer = timer_read(); // set initial time for idle timeout
     #endif
-    // Read the user config from EEPROM
-    user_config.raw = eeconfig_read_user();
-    rgb_hilite_caps        = user_config.rgb_hilite_caps;
+}
+
+/* Set defaults for EEPROM user configuration variables */
+void eeconfig_init_user(void) {
+    user_config.raw                           = 0;
+    user_config.rgb_hilite_caps               = true;
+    user_config.encoder_press_mute_or_media   = true;
+    eeconfig_update_user(user_config.raw);
 }

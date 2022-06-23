@@ -49,13 +49,14 @@ enum custom_user_layers {
 // KEYCODES
 enum custom_user_keycodes {
     KC_00 = SAFE_RANGE,
-        ENCFUNC,
+        ENCFUNC,       // Encoder function
         KC_WINLCK,     // Toggles Win key on and off
         RGB_TOI,       // Timeout idle time up
         RGB_TOD,       // Timeout idle time down
         RGB_NITE,      // Turns off all rgb but allow rgb indicators to work
 
         TOG_CAPS,      // Toggles RGB highlighting of alphas during capslock
+        TOG_ENC,   // Toggle Encoder functionality
 
         YAHOO,         // yahoo.com
         OUTLOOK,       // outlook.com
@@ -83,6 +84,22 @@ enum custom_tapdance {
     #endif // TD_LSFT_CAPSLOCK_ENABLE
     TD_ESC_BASELYR
 };
+
+// Set up boolean variables to track user customizable configuration options
+typedef union {
+  uint32_t raw;
+  struct {
+    bool     rgb_hilite_caps :1;
+    bool     rgb_hilite_numpad :1;
+    bool     double_tap_shift_for_capslock :1;
+    bool     del_right_home_top :1;
+    bool     encoder_press_mute_or_media :1;
+    bool     esc_double_tap_to_baselyr :1;
+    bool     ins_on_shft_bkspc_or_del :1;
+  };
+} user_config_t;
+
+user_config_t user_config;
 
 #ifdef TD_LSFT_CAPSLOCK_ENABLE
     #define KC_LSFTCAPSWIN TD(TD_LSFT_CAPS_WIN)
