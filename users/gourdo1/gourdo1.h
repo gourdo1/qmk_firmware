@@ -56,7 +56,8 @@ enum custom_user_keycodes {
         RGB_NITE,      // Turns off all rgb but allow rgb indicators to work
 
         TOG_CAPS,      // Toggles RGB highlighting of alphas during capslock
-        TOG_ENC,   // Toggle Encoder functionality
+        TOG_PAD,       // Toggles RGB highlighting of keys on numpad+mousekeys layer
+        TOG_ENC,       // Toggle Encoder functionality
 
         YAHOO,         // yahoo.com
         OUTLOOK,       // outlook.com

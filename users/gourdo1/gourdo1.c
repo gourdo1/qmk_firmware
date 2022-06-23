@@ -144,6 +144,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
             }
         }
         break;
+    case TOG_PAD:  // Toggle RGB highlighting of Numpad state
+        if (record->event.pressed) {
+            user_config.rgb_hilite_numpad ^= 1; // Toggles the status
+            eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+            if (user_config.rgb_hilite_numpad) {
+                SEND_STRING("Numpad RGB Mode ON");
+            } else {
+                SEND_STRING("Numpad RGB Mode OFF");
+            }
+        }
+        break;
     case TOG_ENC:  // Toggle Encoder function
         if (record->event.pressed) {
             user_config.encoder_press_mute_or_media ^= 1; // Toggles the status
@@ -446,6 +457,12 @@ void keyboard_post_init_user(void) {
 void eeconfig_init_user(void) {
     user_config.raw                           = 0;
     user_config.rgb_hilite_caps               = true;
+    user_config.rgb_hilite_numpad             = true;
+    user_config.double_tap_shift_for_capslock = true;
+    user_config.del_right_home_top            = true;
     user_config.encoder_press_mute_or_media   = true;
+    user_config.esc_double_tap_to_baselyr     = true;
+    user_config.ins_on_shft_bkspc_or_del      = true;
+
     eeconfig_update_user(user_config.raw);
 }
