@@ -50,14 +50,17 @@ enum custom_user_layers {
 enum custom_user_keycodes {
     KC_00 = SAFE_RANGE,
         ENCFUNC,       // Encoder function
+        CAPSNUM,       // Capslock function
         KC_WINLCK,     // Toggles Win key on and off
         RGB_TOI,       // Timeout idle time up
         RGB_TOD,       // Timeout idle time down
-        RGB_NITE,      // Turns off all rgb but allow rgb indicators to work
+        RGB_NITE,      // Disables RGB backlighting effects but allows RGB indicators to still work
 
-        TOG_CAPS,      // Toggles RGB highlighting of alphas during capslock
-        TOG_PAD,       // Toggles RGB highlighting of keys on numpad+mousekeys layer
-        TOG_ENC,       // Toggle Encoder functionality
+        TG_CAPS,       // Toggles RGB highlighting of alphas during capslock
+        TG_PAD,        // Toggles RGB highlighting of keys on numpad+mousekeys layer
+        TG_TDCAP,      // Toggles double tap shift (tapdance) for CapsLock
+        TG_DEL,        // Swaps DEL and HOME key locations
+        TG_ENC,        // Toggle Encoder functionality
 
         YAHOO,         // yahoo.com
         OUTLOOK,       // outlook.com

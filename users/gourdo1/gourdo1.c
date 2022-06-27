@@ -133,7 +133,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
     switch (keycode) {
 
         // User configuration toggles
-    case TOG_CAPS:  // Toggle RGB highlighting of Capslock state
+    case TG_CAPS:  // Toggle RGB highlighting of Capslock state
         if (record->event.pressed) {
             user_config.rgb_hilite_caps ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
@@ -144,7 +144,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
             }
         }
         break;
-    case TOG_PAD:  // Toggle RGB highlighting of Numpad state
+    case TG_PAD:  // Toggle RGB highlighting of Numpad state
         if (record->event.pressed) {
             user_config.rgb_hilite_numpad ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
@@ -155,7 +155,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
             }
         }
         break;
-    case TOG_ENC:  // Toggle Encoder function
+    case TG_TDCAP:  // Toggle alternate Capslock/Numpad functionality
+        if (record->event.pressed) {
+            user_config.double_tap_shift_for_capslock ^= 1; // Toggles the status
+            eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+            if (user_config.double_tap_shift_for_capslock) {
+                SEND_STRING("Double tap Left-Shift for Capslock & Numpad layer ON");
+            } else {
+                SEND_STRING("Double tap Left-Shift for Capslock & Numpad layer OFF");
+            }
+        }
+        break;
+    case TG_ENC:  // Toggle Encoder function
         if (record->event.pressed) {
             user_config.encoder_press_mute_or_media ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
@@ -178,6 +189,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         else {
             if (record -> event.pressed) {
             register_code(KC_MPLY);
+            } else unregister_code16(keycode);
+        }
+        break;
+
+        // CapsLock&Numpad special trigger functions
+    case CAPSNUM:
+        if (user_config.double_tap_shift_for_capslock) {
+            if (record -> event.pressed) {
+                register_code(KC_LSFTCAPSWIN);
+            } else unregister_code16(keycode);
+        }
+        else {
+            if (record -> event.pressed) {
+            register_code(KC_LSFT);
             } else unregister_code16(keycode);
         }
         break;
