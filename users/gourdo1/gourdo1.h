@@ -83,9 +83,7 @@ enum custom_user_keycodes {
 
 // Tap Dance Definitions
 enum custom_tapdance {
-    #ifdef TD_LSFT_CAPSLOCK_ENABLE
     TD_LSFT_CAPS_WIN,
-    #endif // TD_LSFT_CAPSLOCK_ENABLE
     TD_ESC_BASELYR
 };
 
@@ -105,12 +103,7 @@ typedef union {
 
 user_config_t user_config;
 
-#ifdef TD_LSFT_CAPSLOCK_ENABLE
-    #define KC_LSFTCAPSWIN TD(TD_LSFT_CAPS_WIN)
-#else // regular Shift
-    #define KC_LSFTCAPSWIN KC_LSFT
-#endif // TD_LSFT_CAPSLOCK_ENABLE
-
+#define KC_LSFTCAPSWIN TD(TD_LSFT_CAPS_WIN)
 #define KC_ESCLYR TD(TD_ESC_BASELYR)
 
 // ENCODER ACTIONS
