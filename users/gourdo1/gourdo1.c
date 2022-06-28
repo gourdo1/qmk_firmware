@@ -132,6 +132,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
     }
 
     //Numpad on CapsLock hold & double tap function
+    // Copyright 2022 Google LLC
+    // SPDX-License-Identifier: Apache-2.0
     static bool toggled = false;
     static bool tapped = false;
     static uint16_t tap_timer = 0;
@@ -174,13 +176,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         tapped = false;
     }
 
-//if (record->event.pressed) {
-//  static bool tapped = false;
-//  static uint16_t tap_timer = 0;
+    //Switch to BASE layer on ESC double tap function
+    // Copyright 2022 Google LLC
+    // SPDX-License-Identifier: Apache-2.0
     if (keycode == KC_ESC) {
         if (user_config.esc_double_tap_to_baselyr) {
-            if (record->event.pressed) {
-                if (tapped && !timer_expired(record->event.time, tap_timer)) {
+            if (record -> event.pressed) {
+                if (tapped && !timer_expired(record -> event.time, tap_timer)) {
                   // The key was double tapped.
                   clear_mods();  // If needed, clear the mods.
                   // Do something interesting...
@@ -189,7 +191,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
                 }
                 SEND_STRING("ESC");
                 tapped = true;
-                tap_timer = record->event.time + TAPPING_TERM;
+                tap_timer = record -> event.time + TAPPING_TERM;
             } else {
                 // On an event with any other key, reset the double tap state.
                 tapped = false;
