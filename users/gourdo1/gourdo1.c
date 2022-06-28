@@ -174,43 +174,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         tapped = false;
     }
 
-/*    //ESC Layer move function
-    if (keycode == ESCLYR) {
-        if (user_config.esc_double_tap_to_baselyr) {
-            // Act as ESC on tap and revert to _BASE on double tap
-            if (record -> event.pressed) { // ESCLYR key was pressed
-                // Check whether the key was recently tapped
-                if (tapped && !timer_expired(record -> event.time, tap_timer)) {
-                    // This is a double tap (or possibly a triple tap or more)
-                    // Go to _BASE layer
-                    layer_move(_BASE);
-                } else {
-                    // Otherwise act like normal ESC key
-                    tapped = false;
-                    register_code(KC_ESC);
-                    return false;
-                }
-                // Set that the first tap occurred in a potential double tap
-                tapped = true;
-                tap_timer = record -> event.time + TAPPING_TERM;
-            } else {
-                unregister_code(KC_ESC);
-            }
-        } else { // When esc_double_tap_to_baselyr == false
-            // Simply act as KC_ESC
-            if (record -> event.pressed) {
-                register_code(KC_ESC);
-            } else {
-                unregister_code(KC_ESC);
-            }
-        }
-        return false;
-    } else {
-        // On an event with any other key, reset the double tap state
-        tapped = false;
-    }
-*/
-
 //if (record->event.pressed) {
 //  static bool tapped = false;
 //  static uint16_t tap_timer = 0;
