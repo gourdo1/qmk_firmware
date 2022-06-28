@@ -63,11 +63,11 @@ static bool process_esc_to_base(uint16_t keycode, keyrecord_t * record) {
                 }
                 tapped = true;
                 tap_timer = record -> event.time + TAPPING_TERM;
-            } else {
-                // On an event with any other key, reset the double tap state.
-                tapped = false;
             }
         }
+    } else {
+        // On an event with any other key, reset the double tap state.
+        tapped = false;
     }
     return true;
 }
