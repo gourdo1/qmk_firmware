@@ -9,6 +9,7 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 ### Core Functionality
 
 * [VIA](https://www.caniusevia.com/) support enabled (added Mar 16, 2022)
+* Customizations: User accessible toggles for several features that allow you to customize your GMMK Pro without the need for VIA or modifying firmware. (added Jun 29, 2022)
 * Most [default Glorious shortcuts](https://cdn.shopify.com/s/files/1/0549/2681/files/GMMK_Pro_User_Guide.pdf) enabled
 * [N-key Rollover](https://en.wikipedia.org/wiki/Rollover_\(keyboard\)#n-key_rollover) (NKRO) -- toggled with Fn+R
 * 1000Hz polling rate with 5ms debounce time for quick response in games
@@ -30,6 +31,17 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 * Double tap ESC any time to revert to base layer (added Feb 26, 2022)
 * RGB backlight effects expanded to include framebuffer effects and reactive keypress modes (updated May 24, 2022)
 * RGB backlight now remembers last color & effect settings after power down (updated May 24, 2022)
+
+### User Configuration Toggles
+* Print all current settings by opening a text editor and pressing [FN]-<tilde> (caution: verbose!)
+* QWUicvk view settings by holding [FN] and viewing keys 1 through 6 (green means ON, violet means OFF)
+* Settings:
+1. CapsLock RGB alpha keys ON
+2. Numpad RGB highlight ON
+3. Double tap ESC for _BASE layer ON
+4. DEL right of BKSPC, HOME above (default)
+5. Capslock: Double tap LShift (Numpad on CapsLock key)
+6. Encoder button mutes
 
 ### Numpad + Mouse Keys (Capslock key)
 
