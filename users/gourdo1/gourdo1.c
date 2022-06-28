@@ -136,70 +136,78 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
     switch (keycode) {
 
         // User configuration toggles
+    case PRNCONF:  // Print verbose status of all user_config toggles (open a text editor before engaging!!)
+        if (record->event.pressed) {
+            SEND_STRING("GMMK Pro user configuration below. Press [FN]-<number key> to toggle settings."SS_TAP(X_ENT));
+            SEND_STRING("Config also visible by pressing [FN] and viewing keys 1 through 6."SS_TAP(X_ENT));
+            SEND_STRING("=============================================================================="SS_TAP(X_ENT));
+            if (user_config.rgb_hilite_caps) {
+                SEND_STRING("1. CapsLock RGB alpha keys ON"SS_TAP(X_ENT));
+            } else {
+                SEND_STRING("1. CapsLock RGB alpha keys OFF"SS_TAP(X_ENT));
+            }
+            if (user_config.rgb_hilite_numpad) {
+                SEND_STRING("2. Numpad RGB highlight ON"SS_TAP(X_ENT));
+            } else {
+                SEND_STRING("2. Numpad RGB highlight OFF"SS_TAP(X_ENT));
+            }
+            if (user_config.esc_double_tap_to_baselyr) {
+                SEND_STRING("3. Double tap ESC for _BASE layer ON"SS_TAP(X_ENT));
+            } else {
+                SEND_STRING("3. Double tap ESC for _BASE layer OFF"SS_TAP(X_ENT));
+            }
+            if (user_config.del_right_home_top) {
+                SEND_STRING("4. DEL right of BKSPC, HOME above (default)"SS_TAP(X_ENT));
+            } else {
+                SEND_STRING("4. HOME right of BKSPC, DEL above (alternate)"SS_TAP(X_ENT));
+            }
+            if (user_config.double_tap_shift_for_capslock) {
+                SEND_STRING("5. Capslock: Double tap LShift (Numpad on CapsLock key)"SS_TAP(X_ENT));
+            } else {
+                SEND_STRING("5. Capslock: Standard key (Numpad on CapsLock OFF)"SS_TAP(X_ENT));
+            }
+            if (user_config.encoder_press_mute_or_media) {
+                SEND_STRING("6. Encoder button mutes"SS_TAP(X_ENT));
+            } else {
+                SEND_STRING("6. Encoder button plays/pauses media"SS_TAP(X_ENT));
+            }
+        }
+        break;
+
     case TG_CAPS:  // Toggle RGB highlighting of Capslock state
         if (record->event.pressed) {
             user_config.rgb_hilite_caps ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
-            if (user_config.rgb_hilite_caps) {
-                SEND_STRING("Capslock Alpha RGB Mode ON");
-            } else {
-                SEND_STRING("Capslock Alpha RGB Mode OFF");
-            }
         }
         break;
     case TG_PAD:  // Toggle RGB highlighting of Numpad state
         if (record->event.pressed) {
             user_config.rgb_hilite_numpad ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
-            if (user_config.rgb_hilite_numpad) {
-                SEND_STRING("Numpad RGB Mode ON");
-            } else {
-                SEND_STRING("Numpad RGB Mode OFF");
-            }
         }
         break;
     case TG_ESC:  // Toggle alternate ESC functionality
         if (record->event.pressed) {
             user_config.esc_double_tap_to_baselyr ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
-            if (user_config.esc_double_tap_to_baselyr) {
-                SEND_STRING("Double tap ESC for _BASE layer ON");
-            } else {
-                SEND_STRING("Double tap ESC for _BASE layer OFF");
-            }
         }
         break;
     case TG_DEL:  // Toggle alternate placement of DEL and HOME keys
         if (record->event.pressed) {
             user_config.del_right_home_top ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
-            if (user_config.del_right_home_top) {
-                SEND_STRING("DEL to right of backspace, HOME on top (default)");
-            } else {
-                SEND_STRING("HOME to right of backspace, DEL on top (alternate)");
-            }
         }
         break;
     case TG_TDCAP:  // Toggle alternate Capslock/Numpad functionality
         if (record->event.pressed) {
             user_config.double_tap_shift_for_capslock ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
-            if (user_config.double_tap_shift_for_capslock) {
-                SEND_STRING("Double tap Left-Shift for Capslock & Numpad layer ON");
-            } else {
-                SEND_STRING("Double tap Left-Shift for Capslock & Numpad layer OFF");
-            }
         }
         break;
     case TG_ENC:  // Toggle Encoder function
         if (record->event.pressed) {
             user_config.encoder_press_mute_or_media ^= 1; // Toggles the status
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
-            if (user_config.encoder_press_mute_or_media) {
-                SEND_STRING("Encoder Button Mutes");
-            } else {
-                SEND_STRING("Encoder Button Pauses/Plays Media");
-            }
         }
         break;
         //return false;
@@ -511,7 +519,7 @@ void keyboard_post_init_user(void) {
     keyboard_post_init_keymap();
     #ifdef STARTUP_NUMLOCK_ON
     activate_numlock(true); // turn on Num lock by default so that the numpad layer always has predictable results
-    #endif // STARTUP_NUMLOC_ON
+    #endif // STARTUP_NUMLOCK_ON
     #ifdef IDLE_TIMEOUT_ENABLE
     timeout_timer = timer_read(); // set initial time for idle timeout
     #endif
