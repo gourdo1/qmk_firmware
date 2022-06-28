@@ -51,8 +51,8 @@ enum custom_user_keycodes {
     KC_00 = SAFE_RANGE,
         ENCFUNC,       // Encoder function
         CAPSNUM,       // Capslock key function
-        ESCLYR,        // ESC layer function
-        KC_WINLCK,     // Toggles Win key on and off
+        //ESCLYR,        // ESC layer function
+        WINLOCK,       // Toggles Windows key on and off
         RGB_TOI,       // Timeout idle time up
         RGB_TOD,       // Timeout idle time down
         RGB_NITE,      // Disables RGB backlighting effects but allows RGB indicators to still work

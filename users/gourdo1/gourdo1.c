@@ -174,7 +174,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         tapped = false;
     }
 
-    //ESC Layer move function
+/*    //ESC Layer move function
     if (keycode == ESCLYR) {
         if (user_config.esc_double_tap_to_baselyr) {
             // Act as ESC on tap and revert to _BASE on double tap
@@ -183,7 +183,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
                 if (tapped && !timer_expired(record -> event.time, tap_timer)) {
                     // This is a double tap (or possibly a triple tap or more)
                     // Go to _BASE layer
-                    layer_on(_BASE);
+                    layer_move(_BASE);
                 } else {
                     // Otherwise act like normal ESC key
                     tapped = false;
@@ -193,6 +193,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
                 // Set that the first tap occurred in a potential double tap
                 tapped = true;
                 tap_timer = record -> event.time + TAPPING_TERM;
+            } else {
+                unregister_code(KC_ESC);
             }
         } else { // When esc_double_tap_to_baselyr == false
             // Simply act as KC_ESC
@@ -207,6 +209,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         // On an event with any other key, reset the double tap state
         tapped = false;
     }
+*/
+
+//if (record->event.pressed) {
+//  static bool tapped = false;
+//  static uint16_t tap_timer = 0;
+    if (keycode == KC_ESC) {
+        if (user_config.esc_double_tap_to_baselyr) {
+            if (record->event.pressed) {
+                if (tapped && !timer_expired(record->event.time, tap_timer)) {
+                  // The key was double tapped.
+                  clear_mods();  // If needed, clear the mods.
+                  // Do something interesting...
+                  //layer_move(_BASE);
+                  SEND_STRING("_BASE");
+                }
+                SEND_STRING("ESC");
+                tapped = true;
+                tap_timer = record->event.time + TAPPING_TERM;
+            } else {
+                // On an event with any other key, reset the double tap state.
+                tapped = false;
+            }
+        }
+    }
+
 
     // Key macros ...
     switch (keycode) {
@@ -320,8 +347,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         }
         break;
 
-        // WinKey lock
-    case KC_WINLCK:
+        // Windows Key lockout
+    case WINLOCK:
         if (record -> event.pressed) {
             keymap_config.no_gui = !keymap_config.no_gui; //toggle status
         } else unregister_code16(keycode);
