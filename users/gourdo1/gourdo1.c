@@ -1,4 +1,5 @@
 /* Copyright 2021 Jonavin Eng @Jonavin
+   Copyright 2022 Google LLC
    Copyright 2022 gourdo1 <gourdo1@outlook.com>
    
 This program is free software: you can redistribute it and/or modify
@@ -19,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "gourdo1.h"
 
-// Tap once for shift, twice for Caps Lock but only if Win Key in not disabled
+// Tap once for shift, twice for Caps Lock but only if Win Key is not disabled (also disabled by user.config variable)
 void dance_LSFT_each_tap(qk_tap_dance_state_t * state, void * user_data) {
     if (user_config.double_tap_shift_for_capslock) {
         if (state -> count == 1 || keymap_config.no_gui) {
@@ -46,7 +47,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for shift, twice for Caps Lock
     [TD_LSFT_CAPS_WIN] = ACTION_TAP_DANCE_FN_ADVANCED(dance_LSFT_each_tap, NULL, dance_LSFT_reset),
     // Tap once for Escape, twice to reset to base layer
-    [TD_ESC_BASELYR] = ACTION_TAP_DANCE_LAYER_MOVE(KC_ESC, _BASE)
+    //[TD_ESC_BASELYR] = ACTION_TAP_DANCE_LAYER_MOVE(KC_ESC, _BASE)
 };
 
 // RGB NIGHT MODE
@@ -129,6 +130,84 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
     if (!process_record_keymap(keycode, record)) {
         return false;
     }
+
+    //Numpad on CapsLock hold & double tap function
+    static bool toggled = false;
+    static bool tapped = false;
+    static uint16_t tap_timer = 0;
+
+    if (keycode == CAPSNUM) {
+        if (user_config.double_tap_shift_for_capslock) {
+            // Act as TT(_NUMPADMOUSE)
+            if (record -> event.pressed) { // CAPSNUM key was pressed
+                // Check whether the key was recently tapped
+                if (tapped && !timer_expired(record -> event.time, tap_timer)) {
+                    // This is a double tap (or possibly a triple tap or more)
+                    // Toggle the layer on.
+                    toggled = true;
+                } else if (toggled) {
+                    // Otherwise if currently toggled, turn it off
+                    toggled = false;
+                    tapped = false;
+                    layer_off(_NUMPADMOUSE);
+                    return false;
+                }
+                // Set that the first tap occurred in a potential double tap
+                tapped = true;
+                tap_timer = record -> event.time + TAPPING_TERM;
+                layer_on(_NUMPADMOUSE);
+            } else if (!toggled) {
+                // If not currently toggled, turn off on key release
+                layer_off(_NUMPADMOUSE);
+            }
+        } else { // When double_tap_shift_for_capslock == false
+            // Act as KC_CAPS
+            if (record -> event.pressed) {
+                register_code(KC_CAPS);
+            } else {
+                unregister_code(KC_CAPS);
+            }
+        }
+        return false;
+    } else {
+        // On an event with any other key, reset the double tap state
+        tapped = false;
+    }
+
+    //ESC Layer move function
+    if (keycode == ESCLYR) {
+        if (user_config.esc_double_tap_to_baselyr) {
+            // Act as ESC on tap and revert to _BASE on double tap
+            if (record -> event.pressed) { // ESCLYR key was pressed
+                // Check whether the key was recently tapped
+                if (tapped && !timer_expired(record -> event.time, tap_timer)) {
+                    // This is a double tap (or possibly a triple tap or more)
+                    // Go to _BASE layer
+                    layer_on(_BASE);
+                } else {
+                    // Otherwise act like normal ESC key
+                    tapped = false;
+                    register_code(KC_ESC);
+                    return false;
+                }
+                // Set that the first tap occurred in a potential double tap
+                tapped = true;
+                tap_timer = record -> event.time + TAPPING_TERM;
+            }
+        } else { // When esc_double_tap_to_baselyr == false
+            // Simply act as KC_ESC
+            if (record -> event.pressed) {
+                register_code(KC_ESC);
+            } else {
+                unregister_code(KC_ESC);
+            }
+        }
+        return false;
+    } else {
+        // On an event with any other key, reset the double tap state
+        tapped = false;
+    }
+
     // Key macros ...
     switch (keycode) {
 
@@ -152,6 +231,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
                 SEND_STRING("Numpad RGB Mode ON");
             } else {
                 SEND_STRING("Numpad RGB Mode OFF");
+            }
+        }
+        break;
+    case TG_ESC:  // Toggle alternate ESC functionality
+        if (record->event.pressed) {
+            user_config.esc_double_tap_to_baselyr ^= 1; // Toggles the status
+            eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+            if (user_config.esc_double_tap_to_baselyr) {
+                SEND_STRING("Double tap ESC for _BASE layer ON");
+            } else {
+                SEND_STRING("Double tap ESC for _BASE layer OFF");
             }
         }
         break;
@@ -188,7 +278,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         }
         else {
             if (record -> event.pressed) {
-            register_code(KC_MPLY);
+                register_code(KC_MPLY);
             } else unregister_code16(keycode);
         }
         break;
@@ -422,7 +512,7 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_DQT:
         case KC_COLN:
         case KC_RSFT:
-        case KC_LSFTCAPSWIN:
+        case LSFTCAPSWIN:
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
 
