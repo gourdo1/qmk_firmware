@@ -142,14 +142,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
             SEND_STRING("Config also visible by holding [FN] and viewing keys 1 through 6."SS_TAP(X_ENT));
             SEND_STRING("=============================================================================="SS_TAP(X_ENT));
             if (user_config.rgb_hilite_caps) {
-                SEND_STRING("1. CapsLock RGB alpha keys                          [ON]"SS_TAP(X_ENT));
+                SEND_STRING("1. CapsLock RGB highlight alpha keys                [ON]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("1. CapsLock RGB alpha keys                          [OFF]"SS_TAP(X_ENT));
+                SEND_STRING("1. CapsLock RGB highlight alpha keys                [OFF]"SS_TAP(X_ENT));
             }
             if (user_config.rgb_hilite_numpad) {
-                SEND_STRING("2. Numpad RGB highlight                             [ON]"SS_TAP(X_ENT));
+                SEND_STRING("2. Numpad RGB highlight layer keys                  [ON]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("2. Numpad RGB highlight                             [OFF]"SS_TAP(X_ENT));
+                SEND_STRING("2. Numpad RGB highlight layer keys                  [OFF]"SS_TAP(X_ENT));
             }
             if (user_config.esc_double_tap_to_baselyr) {
                 SEND_STRING("3. Double tap ESC for _BASE layer                   [ON]"SS_TAP(X_ENT));
@@ -157,9 +157,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
                 SEND_STRING("3. Double tap ESC for _BASE layer                   [OFF]"SS_TAP(X_ENT));
             }
             if (user_config.del_right_home_top) {
-                SEND_STRING("4. DEL right of BKSPC, HOME above                   [DEFAULT]"SS_TAP(X_ENT));
+                SEND_STRING("4. DEL/HOME location                                [HOME ON F13/DEL RIGHT of BKSPC]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("4. HOME right of BKSPC, DEL above                   [ALTERNATE]"SS_TAP(X_ENT));
+                SEND_STRING("4. DEL/HOME location                                [DEL ON F13/HOME RIGHT of BKSPC]"SS_TAP(X_ENT));
             }
             if (user_config.double_tap_shift_for_capslock) {
                 SEND_STRING("5. Capslock: Double tap LShift / Numpad on CapsLock [ON]"SS_TAP(X_ENT));
@@ -167,9 +167,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
                 SEND_STRING("5. Capslock: Double tap LShift / Numpad on CapsLock [OFF]"SS_TAP(X_ENT));
             }
             if (user_config.encoder_press_mute_or_media) {
-                SEND_STRING("6. Encoder button mutes"SS_TAP(X_ENT));
+                SEND_STRING("6. Encoder button function                          [MUTE]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("6. Encoder button plays/pauses media"SS_TAP(X_ENT));
+                SEND_STRING("6. Encoder button function                          [MEDIA PLAY/PAUSE]"SS_TAP(X_ENT));
             }
         }
         break;
