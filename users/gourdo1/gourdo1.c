@@ -1,5 +1,4 @@
 /* Copyright 2021 Jonavin Eng @Jonavin
-   Copyright 2022 Google LLC
    Copyright 2022 gourdo1 <gourdo1@outlook.com>
    
 This program is free software: you can redistribute it and/or modify
@@ -19,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 
 #include "gourdo1.h"
+
+#include "custom_double_taps.h"
 
 // Tap once for shift, twice for Caps Lock but only if Win Key is not disabled (also disabled by user.config variable)
 void dance_LSFT_each_tap(qk_tap_dance_state_t * state, void * user_data) {
@@ -127,78 +128,9 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *
 
 bool process_record_user(uint16_t keycode, keyrecord_t * record) {
     mod_state = get_mods();
-    if (!process_record_keymap(keycode, record)) {
-        return false;
-    }
-
-    //Numpad on CapsLock hold & double tap function
-    // Copyright 2022 Google LLC
-    // SPDX-License-Identifier: Apache-2.0
-    static bool toggled = false;
-    static bool tapped = false;
-    static uint16_t tap_timer = 0;
-
-    if (keycode == CAPSNUM) {
-        if (user_config.double_tap_shift_for_capslock) {
-            // Act as TT(_NUMPADMOUSE)
-            if (record -> event.pressed) { // CAPSNUM key was pressed
-                // Check whether the key was recently tapped
-                if (tapped && !timer_expired(record -> event.time, tap_timer)) {
-                    // This is a double tap (or possibly a triple tap or more)
-                    // Toggle the layer on.
-                    toggled = true;
-                } else if (toggled) {
-                    // Otherwise if currently toggled, turn it off
-                    toggled = false;
-                    tapped = false;
-                    layer_off(_NUMPADMOUSE);
-                    return false;
-                }
-                // Set that the first tap occurred in a potential double tap
-                tapped = true;
-                tap_timer = record -> event.time + TAPPING_TERM;
-                layer_on(_NUMPADMOUSE);
-            } else if (!toggled) {
-                // If not currently toggled, turn off on key release
-                layer_off(_NUMPADMOUSE);
-            }
-        } else { // When double_tap_shift_for_capslock == false
-            // Act as KC_CAPS
-            if (record -> event.pressed) {
-                register_code(KC_CAPS);
-            } else {
-                unregister_code(KC_CAPS);
-            }
-        }
-        return false;
-    } else {
-        // On an event with any other key, reset the double tap state
-        tapped = false;
-    }
-
-    //Switch to BASE layer on ESC double tap function
-    // Copyright 2022 Google LLC
-    // SPDX-License-Identifier: Apache-2.0
-    if (keycode == KC_ESC) {
-        if (user_config.esc_double_tap_to_baselyr) {
-            if (record -> event.pressed) {
-                if (tapped && !timer_expired(record -> event.time, tap_timer)) {
-                  // The key was double tapped.
-                  clear_mods();  // If needed, clear the mods.
-                  // Do something interesting...
-                  //layer_move(_BASE);
-                  SEND_STRING("_BASE");
-                }
-                SEND_STRING("ESC");
-                tapped = true;
-                tap_timer = record -> event.time + TAPPING_TERM;
-            } else {
-                // On an event with any other key, reset the double tap state.
-                tapped = false;
-            }
-        }
-    }
-
+    if (!process_record_keymap(keycode, record)) { return false; }
+    if (!process_capsnum(keycode, record)) { return false; }
+    if (!process_esc_to_base(keycode, record)) { return false; }
 
     // Key macros ...
     switch (keycode) {
