@@ -33,7 +33,7 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 * RGB backlight now remembers last color & effect settings after power down (updated May 24, 2022)
 
 ### Quick Configuration
-* Print all current settings by opening a text editor and pressing [FN]-<tilde> (caution: verbose!)
+* Print all current settings by opening a text editor and pressing [FN]-[~] (caution: verbose!)
 * Quick view settings by holding [FN] and viewing RGB under keys 1 through 6 (green means ON, violet means OFF)
 #### Toggle-able Settings:
 1. CapsLock RGB - highlight under alpha keys
