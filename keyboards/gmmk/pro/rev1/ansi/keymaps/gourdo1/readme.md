@@ -1,6 +1,6 @@
 # [gourdo1's](mailto:gourdo1@outlook.com) GMMK Pro ANSI layout
 
-This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/qmk_firmware/tree/master/keyboards/gmmk/pro/rev1/ansi/keymaps/jonavin) GMMK Pro layout with several additions, fixes, a tweaked keymap, updated layers, [Tomas Guinan's paddle game](https://github.com/qmk/qmk_firmware/tree/master/keyboards/gmmk/pro/rev1/ansi/keymaps/paddlegame) and expanded RGB controls.
+This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/qmk_firmware/tree/master/keyboards/gmmk/pro/rev1/ansi/keymaps/jonavin) GMMK Pro layout with many additions, fixes, a revamped keymap, persistent user customizations, updated layers, [Tomas Guinan's paddle game](https://github.com/qmk/qmk_firmware/tree/master/keyboards/gmmk/pro/rev1/ansi/keymaps/paddlegame) and expanded RGB effects and controls.
 
 ![image](https://raw.githubusercontent.com/gourdo1/media/main/susuwatari.jpg)
 
@@ -8,8 +8,8 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 
 ### Core Functionality
 
+* Quick & Easy Customization: Toggle features without the need to modify firmware or access VIA. (added Jun 29, 2022)
 * [VIA](https://www.caniusevia.com/) support enabled (added Mar 16, 2022)
-* Quick Configuration: Customize your GMMK Pro without the need for VIA or modifying firmware. (added Jun 29, 2022)
 * Most [default Glorious shortcuts](https://cdn.shopify.com/s/files/1/0549/2681/files/GMMK_Pro_User_Guide.pdf) enabled
 * [N-key Rollover](https://en.wikipedia.org/wiki/Rollover_\(keyboard\)#n-key_rollover) (NKRO) -- toggled with Fn+R
 * 1000Hz polling rate with 5ms debounce time for quick response in games
@@ -32,9 +32,10 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 * RGB backlight effects expanded to include framebuffer effects and reactive keypress modes (updated May 24, 2022)
 * RGB backlight now remembers last color & effect settings after power down (updated May 24, 2022)
 
-### Quick Configuration
-* Print all current settings by opening a text editor and pressing [FN]-[~] (caution: verbose!)
-* Quick view settings by holding [FN] and viewing RGB under keys 1 through 6 (green means ON, violet means OFF)
+### Quick & Easy Customization
+* Below features can be toggled by holding [FN] and pressing the number corresponding to that feature. Changes are saved to EEPROM for persistence.
+* Print all current settings by opening a text editor and pressing [FN]-[~] (CAUTION: verbose!)
+* Quick view current settings by holding [FN] and viewing RGB under keys 1 through 6 (green means ON, violet means OFF)
 #### Toggle-able Settings:
 1. CapsLock RGB - highlight under alpha keys
 2. Numpad RGB - highlight under numpad layer keys
