@@ -36,12 +36,12 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 * Print all current settings by opening a text editor and pressing [FN]-<tilde> (caution: verbose!)
 * QWUicvk view settings by holding [FN] and viewing keys 1 through 6 (green means ON, violet means OFF)
 * Settings:
-1. CapsLock RGB alpha keys ON
-2. Numpad RGB highlight ON
-3. Double tap ESC for _BASE layer ON
-4. DEL right of BKSPC, HOME above (default)
-5. Capslock: Double tap LShift (Numpad on CapsLock key)
-6. Encoder button mutes
+  1. CapsLock RGB alpha keys ON
+  2. Numpad RGB highlight ON
+  3. Double tap ESC for _BASE layer ON
+  4. DEL right of BKSPC, HOME above (default)
+  5. Capslock: Double tap LShift (Numpad on CapsLock key)
+  6. Encoder button mutes
 
 ### Numpad + Mouse Keys (Capslock key)
 
