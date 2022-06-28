@@ -52,6 +52,8 @@ enum custom_user_keycodes {
         ENCFUNC,       // Encoder function
         CAPSNUM,       // Capslock key function
         //ESCLYR,        // ESC layer function
+        LEFTOFENC,     // Key to the left of encoder (F13)
+        BELOWENC,      // Key below encoder
         WINLOCK,       // Toggles Windows key on and off
         RGB_TOI,       // Timeout idle time up
         RGB_TOD,       // Timeout idle time down

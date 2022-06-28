@@ -237,6 +237,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
             }
         }
         break;
+    case TG_DEL:  // Toggle alternate placement of DEL and HOME keys
+        if (record->event.pressed) {
+            user_config.del_right_home_top ^= 1; // Toggles the status
+            eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+            if (user_config.del_right_home_top) {
+                SEND_STRING("DEL to right of backspace, HOME on top (default)");
+            } else {
+                SEND_STRING("HOME to right of backspace, DEL on top (alternate)");
+            }
+        }
+        break;
     case TG_TDCAP:  // Toggle alternate Capslock/Numpad functionality
         if (record->event.pressed) {
             user_config.double_tap_shift_for_capslock ^= 1; // Toggles the status
@@ -260,6 +271,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         }
         break;
         //return false;
+
+        // Key to the left of encoder function (default HOME)
+    case LEFTOFENC:
+        if (user_config.del_right_home_top) {
+            if (record -> event.pressed) {
+                register_code(KC_HOME);
+            } else unregister_code(KC_HOME);
+        }
+        else {
+            if (record -> event.pressed) {
+                register_code(KC_DEL);
+            } else unregister_code(KC_DEL);
+        }
+        break;
+
+        // Key below encoder function (default DEL)
+    case BELOWENC:
+        if (user_config.del_right_home_top) {
+            if (record -> event.pressed) {
+                register_code(KC_DEL);
+            } else unregister_code(KC_DEL);
+        }
+        else {
+            if (record -> event.pressed) {
+                register_code(KC_HOME);
+            } else unregister_code(KC_HOME);
+        }
+        break;
 
         // Encoder button function
     case ENCFUNC:
