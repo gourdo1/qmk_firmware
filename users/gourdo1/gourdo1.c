@@ -138,38 +138,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         // User configuration toggles
     case PRNCONF:  // Print verbose status of all user_config toggles (open a text editor before engaging!!)
         if (record->event.pressed) {
-            SEND_STRING(SS_TAP(X_ENT)"GMMK Pro user configuration below. Press [FN]+<number key> to toggle settings."SS_TAP(X_ENT));
+            SEND_STRING(SS_TAP(X_ENT)"GMMK Pro User Settings. Press [FN]+<number key> to toggle each."SS_TAP(X_ENT));
             SEND_STRING("Config also visible by holding [FN] and viewing keys 1 through 6."SS_TAP(X_ENT));
-            SEND_STRING("=============================================================================="SS_TAP(X_ENT));
+            SEND_STRING("================================================================="SS_TAP(X_ENT));
+            SEND_STRING("1. CapsLock RGB highlight alpha keys                ");
             if (user_config.rgb_hilite_caps) {
-                SEND_STRING("1. CapsLock RGB highlight alpha keys                [ON]"SS_TAP(X_ENT));
+                SEND_STRING("[ON]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("1. CapsLock RGB highlight alpha keys                [OFF]"SS_TAP(X_ENT));
+                SEND_STRING("[OFF]"SS_TAP(X_ENT));
             }
+            SEND_STRING("2. Numpad RGB highlight layer keys                  ");
             if (user_config.rgb_hilite_numpad) {
-                SEND_STRING("2. Numpad RGB highlight layer keys                  [ON]"SS_TAP(X_ENT));
+                SEND_STRING("[ON]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("2. Numpad RGB highlight layer keys                  [OFF]"SS_TAP(X_ENT));
+                SEND_STRING("[OFF]"SS_TAP(X_ENT));
             }
+            SEND_STRING("3. Double tap ESC to revert to BASE layer           ");
             if (user_config.esc_double_tap_to_baselyr) {
-                SEND_STRING("3. Double tap ESC for _BASE layer                   [ON]"SS_TAP(X_ENT));
+                SEND_STRING("[ON]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("3. Double tap ESC for _BASE layer                   [OFF]"SS_TAP(X_ENT));
+                SEND_STRING("[OFF]"SS_TAP(X_ENT));
             }
+            SEND_STRING("4. DEL & HOME key locations                         ");
             if (user_config.del_right_home_top) {
-                SEND_STRING("4. DEL/HOME location                                [HOME ON F13/DEL RIGHT of BKSPC]"SS_TAP(X_ENT));
+                SEND_STRING("[HOME on F13;DEL right of BKSPC]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("4. DEL/HOME location                                [DEL ON F13/HOME RIGHT of BKSPC]"SS_TAP(X_ENT));
+                SEND_STRING("[DEL on F13;HOME right of BKSPC]"SS_TAP(X_ENT));
             }
+            SEND_STRING("5. Capslock: Double tap LShift / Numpad on CapsLock ");
             if (user_config.double_tap_shift_for_capslock) {
-                SEND_STRING("5. Capslock: Double tap LShift / Numpad on CapsLock [ON]"SS_TAP(X_ENT));
+                SEND_STRING("[ON]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("5. Capslock: Double tap LShift / Numpad on CapsLock [OFF]"SS_TAP(X_ENT));
+                SEND_STRING("[OFF]"SS_TAP(X_ENT));
             }
+            SEND_STRING("6. Encoder button function                          ");
             if (user_config.encoder_press_mute_or_media) {
-                SEND_STRING("6. Encoder button function                          [MUTE]"SS_TAP(X_ENT));
+                SEND_STRING("[MUTE]"SS_TAP(X_ENT));
             } else {
-                SEND_STRING("6. Encoder button function                          [MEDIA PLAY/PAUSE]"SS_TAP(X_ENT));
+                SEND_STRING("[MEDIA PLAY/PAUSE]"SS_TAP(X_ENT));
             }
         }
         break;

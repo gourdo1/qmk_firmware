@@ -98,10 +98,10 @@ typedef union {
   struct {
     bool     rgb_hilite_caps :1;
     bool     rgb_hilite_numpad :1;
-    bool     double_tap_shift_for_capslock :1;
-    bool     del_right_home_top :1;
-    bool     encoder_press_mute_or_media :1;
     bool     esc_double_tap_to_baselyr :1;
+    bool     del_right_home_top :1;
+    bool     double_tap_shift_for_capslock :1;
+    bool     encoder_press_mute_or_media :1;
     bool     ins_on_shft_bkspc_or_del :1;
   };
 } user_config_t;
