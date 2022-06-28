@@ -9,14 +9,14 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 ### Core Functionality
 
 * [VIA](https://www.caniusevia.com/) support enabled (added Mar 16, 2022)
-* Customizations: User accessible toggles for several features that allow you to customize your GMMK Pro without the need for VIA or modifying firmware. (added Jun 29, 2022)
+* Quick Configuration: Customize your GMMK Pro without the need for VIA or modifying firmware. (added Jun 29, 2022)
 * Most [default Glorious shortcuts](https://cdn.shopify.com/s/files/1/0549/2681/files/GMMK_Pro_User_Guide.pdf) enabled
 * [N-key Rollover](https://en.wikipedia.org/wiki/Rollover_\(keyboard\)#n-key_rollover) (NKRO) -- toggled with Fn+R
 * 1000Hz polling rate with 5ms debounce time for quick response in games
-* Mouse Keys! Don't want to move your hands off the keyboard or you didn't bring it with you on the road? Use cursor keys to move the mouse.
+* Mouse Keys! Don't want to move your hands off the keyboard or you didn't bring it with you? Use cursor keys to move the mouse
 * Overlay numpad on 789-UIOP-JKL;-M,. & Space-bar mapped to Enter key for rapid number entry
-* Gaming mode (Fn+Win-key) locks out Win-key as well as double-tap Shift Capslock; Also RGB highlights WSAD and nearby gaming related keys
-* [Caps Word](https://getreuer.info/posts/keyboards/caps-word/index.html) enabled: To capitalize the next word only, press and release both left and right shift keys at the same time. (added Feb 25, 2022)
+* Gaming mode (Fn+Win-key) locks out Win-key and double-tap Shift Capslock; Also RGB highlights WSAD and nearby gaming keys
+* Caps Word enabled: To capitalize the next word only, press and release left and right shift at the same time. (added Feb 25, 2022)
 * Multi-monitor app moving shortcuts: Fn+[,] (square brackets) to move current app window to next monitor (added Apr 11, 2022)
 * Capslock toggled by double tap of Left Shift key or Fn + Capslock (RGB green highlighted)
 * Paddle game accessible via Fn+P; Hit Fn+P again or double tap ESC to exit (added May 5, 2022)
@@ -27,21 +27,21 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 * Home key on F13, Del key right of Backspace
 * Insert accessible via Shift-Backspace (so shift delete still works in Windows Explorer)
 * PrtScrn, Scroll Lock, Pause/Break are top right on the keyboard: Fn+F11, Fn+F12, Fn+F13
-* [Colemak](https://colemak.com/) key layout support (Layer accessible via Left Shift + turn Encoder clockwise until side LEDs light up purple)
+* [Colemak](https://colemak.com/) key layout support (Accessible via Left Shift + turn Encoder clockwise until side LEDs light up purple)
 * Double tap ESC any time to revert to base layer (added Feb 26, 2022)
 * RGB backlight effects expanded to include framebuffer effects and reactive keypress modes (updated May 24, 2022)
 * RGB backlight now remembers last color & effect settings after power down (updated May 24, 2022)
 
-### User Configuration Toggles
+### Quick Configuration
 * Print all current settings by opening a text editor and pressing [FN]-<tilde> (caution: verbose!)
 * Quick view settings by holding [FN] and viewing RGB under keys 1 through 6 (green means ON, violet means OFF)
-#### Settings:
-1. CapsLock RGB alpha keys ON
-2. Numpad RGB highlight ON
-3. Double tap ESC for _BASE layer ON
-4. DEL right of BKSPC, HOME above (default)
-5. Capslock: Double tap LShift (Numpad on CapsLock key)
-6. Encoder button mutes
+#### Toggle-able Settings:
+1. CapsLock RGB - highlight under alpha keys
+2. Numpad RGB - highlight under numpad layer keys
+3. ESC key - Double tap ESC key to go to base layer
+4. Swap DEL and HOME - Default is DEL to the right of BKSPC & HOME is above BKSPC
+5. Capslock function - Toggle between double tap LShift for CapsLock with Numpad on CapsLock key (default) and normal CapsLock
+6. Encoder button - default mutes volume; alternate plays/pauses media
 
 ### Numpad + Mouse Keys (Capslock key)
 
