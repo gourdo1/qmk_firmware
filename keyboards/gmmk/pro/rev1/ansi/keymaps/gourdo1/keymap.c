@@ -388,14 +388,14 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
         // Add RGB Timeout Indicator -- shows 0 to 139 using F row and num row; larger numbers using 16bit code
         uint16_t timeout_threshold = get_timeout_threshold();
-        if (timeout_threshold <= 10) rgb_matrix_set_color(LED_LIST_FUNCROW[timeout_threshold], RGB_CYAN);
+        if (timeout_threshold <= 10) rgb_matrix_set_color(LED_LIST_FUNCROW[timeout_threshold], RGB_BLUE);
         else if (timeout_threshold < 140) {
             rgb_matrix_set_color(LED_LIST_FUNCROW[(timeout_threshold / 10)], RGB_CYAN);
-            rgb_matrix_set_color(LED_LIST_NUMROW[(timeout_threshold % 10)], RGB_CYAN);
+            rgb_matrix_set_color(LED_LIST_FUNCROW[(timeout_threshold % 10)], RGB_BLUE);
         } else { // >= 140 minutes, just show these 3 lights
-            rgb_matrix_set_color(LED_LIST_NUMROW[10], RGB_CYAN);
-            rgb_matrix_set_color(LED_LIST_NUMROW[11], RGB_CYAN);
-            rgb_matrix_set_color(LED_LIST_NUMROW[12], RGB_CYAN);
+            rgb_matrix_set_color(LED_LIST_FUNCROW[10], RGB_CYAN);
+            rgb_matrix_set_color(LED_LIST_FUNCROW[11], RGB_CYAN);
+            rgb_matrix_set_color(LED_LIST_FUNCROW[12], RGB_CYAN);
         }
         break;
 

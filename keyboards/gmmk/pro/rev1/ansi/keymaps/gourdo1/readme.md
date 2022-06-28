@@ -34,14 +34,14 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 
 ### Quick & Easy Customization
 * Below features can be toggled by holding [FN] and pressing the number corresponding to that feature. Changes are saved to EEPROM for persistence.
-* Print all current settings by opening a text editor and pressing [FN]-[~] (CAUTION: verbose!)
+* Print all current settings by opening a text editor and pressing [FN]+[~] (CAUTION: verbose!)
 * Quick view current settings by holding [FN] and viewing RGB under keys 1 through 6 (green means ON, violet means OFF)
 #### Toggle-able Settings:
 1. CapsLock RGB - highlight under alpha keys
 2. Numpad RGB - highlight under numpad layer keys
 3. ESC key - Double tap ESC key to go to base layer
 4. Swap DEL and HOME - Default is DEL to the right of BKSPC & HOME is above BKSPC
-5. Capslock function - Toggle between double tap LShift for CapsLock with Numpad on CapsLock key (default) and normal CapsLock
+5. Capslock function - Toggle between double tap LShift for CapsLock with Numpad on CapsLock key (default) and standard CapsLock
 6. Encoder button - default mutes volume; alternate plays/pauses media
 
 ### Numpad + Mouse Keys (Capslock key)
@@ -85,10 +85,10 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 * RGB backlight brightness: Fn+W/S
 * RGB backlight saturation: Fn+Q/E (added Feb 4, 2022)
 * RGB backlight night mode toggle: Fn+Z (indicators still work)
-* RGB backlight timeout: Fn+Encoder or "-" and "=" (default 18 minutes) (updated June 28, 2022)
-    * indicators in Fn layer using RGB in F-key and number rows to show the current timeout in minutes
+* RGB backlight timeout: Fn+Encoder or "-" and "=" (default 15 minutes) (updated June 28, 2022)
+    *  F-key row indicator lights (cyan and blue) in Fn layer display the current backlight timeout in minutes
 * Fn+Z to turn off RGB backlighting (indicator lights still work); press again to toggle
-* RGB indicators on left side LEDs in order from top: System NumLock off (orange), Scroll Lock (red), Numpad (blue), Capslock (green).
+* Left side RGB indicators in order from top: System NumLock off (orange), Scroll Lock (red), Numpad (blue), Capslock (green).
 
 ### Advanced Controls
 
