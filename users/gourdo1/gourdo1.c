@@ -139,8 +139,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
     case PRNCONF:  // Print verbose status of all user_config toggles (open a text editor before engaging!!)
         if (record->event.pressed) {
             SEND_STRING(SS_TAP(X_ENT)"GMMK Pro User Settings. Press [FN]+<number key> to toggle each."SS_TAP(X_ENT));
-            SEND_STRING("Config also visible by holding [FN] and viewing keys 1 through 6."SS_TAP(X_ENT));
-            SEND_STRING("================================================================="SS_TAP(X_ENT));
+            SEND_STRING("Config also visible by holding [FN] and viewing RGB under number keys."SS_TAP(X_ENT));
+            SEND_STRING("======================================================================"SS_TAP(X_ENT));
             SEND_STRING("1. CapsLock RGB highlight alpha keys                ");
             if (user_config.rgb_hilite_caps) {
                 SEND_STRING("[ON]"SS_TAP(X_ENT));
@@ -176,6 +176,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
                 SEND_STRING("[MUTE]"SS_TAP(X_ENT));
             } else {
                 SEND_STRING("[MEDIA PLAY/PAUSE]"SS_TAP(X_ENT));
+            }
+            SEND_STRING("7. Insert function accessed with                    ");
+            if (user_config.ins_on_shft_bkspc_or_del) {
+                SEND_STRING("[SHIFT]-[BKSPC]"SS_TAP(X_ENT));
+            } else {
+                SEND_STRING("[SHIFT]-[DEL]"SS_TAP(X_ENT));
             }
         }
         break;
@@ -216,33 +222,117 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
             eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
         }
         break;
+    case TG_INS:  // Toggle Encoder function
+        if (record->event.pressed) {
+            user_config.ins_on_shft_bkspc_or_del ^= 1; // Toggles the status
+            eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+        }
+        break;
         //return false;
 
         // Key to the left of encoder function (default HOME)
     case LEFTOFENC:
-        if (user_config.del_right_home_top) {
+        if (!(user_config.del_right_home_top)) {
+            if (!(user_config.ins_on_shft_bkspc_or_del)) {
+                static bool inskey_registered;
+                if (record -> event.pressed) {
+                    // Detect the activation of either shift keys
+                    if (mod_state & MOD_MASK_SHIFT) {
+                        // First temporarily canceling both shifts so that
+                        // shift isn't applied to the KC_INS keycode
+                        del_mods(MOD_MASK_SHIFT);
+                        register_code(KC_INS);
+                        // Update the boolean variable to reflect the status of KC_INS
+                        inskey_registered = true;
+                        // Reapplying modifier state so that the held shift key(s)
+                        // still work even after having tapped the key.
+                        set_mods(mod_state);
+                        return false;
+                    } else {
+                        register_code(KC_DEL);
+                        return false;
+                    }
+                } else { // on release of KC_DEL
+                    // In case KC_INS is still being sent even after the release of KC_DEL
+                    if (inskey_registered) {
+                        unregister_code(KC_INS);
+                        inskey_registered = false;
+                        return false;
+                    } else {
+                        unregister_code(KC_DEL);
+                        return false;
+                    }
+                }
+            } else {
+                if (record -> event.pressed) {
+                    register_code(KC_DEL);
+                    return false;
+                } else {
+                    unregister_code(KC_DEL);
+                    return false;
+                }
+            }
+        } else {
             if (record -> event.pressed) {
                 register_code(KC_HOME);
-            } else unregister_code(KC_HOME);
-        }
-        else {
-            if (record -> event.pressed) {
-                register_code(KC_DEL);
-            } else unregister_code(KC_DEL);
+                return false;
+            } else {
+                unregister_code(KC_HOME);
+                return false;
+            }
         }
         break;
 
         // Key below encoder function (default DEL)
     case BELOWENC:
         if (user_config.del_right_home_top) {
-            if (record -> event.pressed) {
-                register_code(KC_DEL);
-            } else unregister_code(KC_DEL);
-        }
-        else {
+            if (!(user_config.ins_on_shft_bkspc_or_del)) {
+                static bool inskey_registered;
+                if (record -> event.pressed) {
+                    // Detect the activation of either shift keys
+                    if (mod_state & MOD_MASK_SHIFT) {
+                        // First temporarily canceling both shifts so that
+                        // shift isn't applied to the KC_INS keycode
+                        del_mods(MOD_MASK_SHIFT);
+                        register_code(KC_INS);
+                        // Update the boolean variable to reflect the status of KC_INS
+                        inskey_registered = true;
+                        // Reapplying modifier state so that the held shift key(s)
+                        // still work even after having tapped the key.
+                        set_mods(mod_state);
+                        return false;
+                    } else {
+                        register_code(KC_DEL);
+                        return false;
+                    }
+                } else { // on release of KC_DEL
+                    // In case KC_INS is still being sent even after the release of KC_DEL
+                    if (inskey_registered) {
+                        unregister_code(KC_INS);
+                        inskey_registered = false;
+                        return false;
+                    } else {
+                        unregister_code(KC_DEL);
+                        return false;
+                    }
+                }
+            } else {
+                if (record -> event.pressed) {
+                    register_code(KC_DEL);
+                    return false;
+                } else {
+                    unregister_code(KC_DEL);
+                    return false;
+                }
+            }
+        } else {
             if (record -> event.pressed) {
                 register_code(KC_HOME);
-            } else unregister_code(KC_HOME);
+                return false;
+            } else {
+                unregister_code(KC_HOME);
+                return false;
+            }
         }
         break;
 
@@ -370,30 +460,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
     }
     break;
 
-    // Add INS as SHIFT-modified BackSpace key
+    // INS as SHIFT-modified BackSpace key
     case KC_BSPC: {
-        // Initialize a boolean variable that keeps track of the delete key status: registered or not?
-        static bool inskey_registered;
-        if (record -> event.pressed) {
-            // Detect the activation of either shift keys
-            if (mod_state & MOD_MASK_SHIFT) {
-                // First temporarily canceling both shifts so that
-                // shift isn't applied to the KC_INS keycode
-                del_mods(MOD_MASK_SHIFT);
-                register_code(KC_INS);
-                // Update the boolean variable to reflect the status of KC_INS
-                inskey_registered = true;
-                // Reapplying modifier state so that the held shift key(s)
-                // still work even after having tapped the Delete/Insert key.
-                set_mods(mod_state);
-                return false;
-            }
-        } else { // on release of KC_BSPC
-            // In case KC_INS is still being sent even after the release of KC_BSPC
-            if (inskey_registered) {
-                unregister_code(KC_INS);
-                inskey_registered = false;
-                return false;
+        if (user_config.ins_on_shft_bkspc_or_del) {
+            // Initialize a boolean variable that keeps track of the ins key status: registered or not?
+            static bool inskey_registered;
+            if (record -> event.pressed) {
+                // Detect the activation of either shift keys
+                if (mod_state & MOD_MASK_SHIFT) {
+                    // First temporarily canceling both shifts so that
+                    // shift isn't applied to the KC_INS keycode
+                    del_mods(MOD_MASK_SHIFT);
+                    register_code(KC_INS);
+                    // Update the boolean variable to reflect the status of KC_INS
+                    inskey_registered = true;
+                    // Reapplying modifier state so that the held shift key(s)
+                    // still work even after having tapped the key.
+                    set_mods(mod_state);
+                    return false;
+                }
+            } else { // on release of KC_BSPC
+                // In case KC_INS is still being sent even after the release of KC_BSPC
+                if (inskey_registered) {
+                    unregister_code(KC_INS);
+                    inskey_registered = false;
+                    return false;
+                }
             }
         }
     }

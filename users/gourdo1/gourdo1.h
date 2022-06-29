@@ -66,6 +66,7 @@ enum custom_user_keycodes {
         TG_DEL,        // Swaps DEL and HOME key locations
         TG_ENC,        // Toggle Encoder functionality
         TG_ESC,        // Toggle ESC tapdance for _BASE layer
+        TG_INS,        // Toggle location of INS
 
         YAHOO,         // yahoo.com
         OUTLOOK,       // outlook.com

@@ -43,6 +43,7 @@ This Windows-centric ANSI layout is based on [Jonavin's](https://github.com/qmk/
 4. Swap DEL and HOME - Default is DEL to the right of BKSPC & HOME is above BKSPC
 5. Capslock function - Toggle between double tap LShift for CapsLock with Numpad on CapsLock key (default) and standard CapsLock
 6. Encoder button - default mutes volume; alternate plays/pauses media
+7. Insert function - Toggle between SHIFT-BKSPC and SHIFT-DEL
 
 ### Numpad + Mouse Keys (Capslock key)
 
