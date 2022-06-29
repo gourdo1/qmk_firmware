@@ -24,15 +24,15 @@ static bool process_capsnum(uint16_t keycode, keyrecord_t * record) {
                     toggled = false;
                     tapped = false;
                     layer_off(_NUMPADMOUSE);
-                    return false;
                 }
                 // Set that the first tap occurred in a potential double tap
                 tapped = true;
                 tap_timer = record -> event.time + TAPPING_TERM;
-                layer_move(_NUMPADMOUSE);
+                layer_on(_NUMPADMOUSE);
             } else if (!toggled) {
                 // If not currently toggled, turn off on key release
                 layer_off(_NUMPADMOUSE);
+                return false;
             }
         } else { // When double_tap_shift_for_capslock == false
             // Act as KC_CAPS
@@ -59,7 +59,7 @@ static bool process_esc_to_base(uint16_t keycode, keyrecord_t * record) {
             if (record -> event.pressed) {
                 if (tapped && !timer_expired(record -> event.time, tap_timer)) {
                     // The key was double tapped.
-                    layer_move(_BASE);
+                    layer_clear();
                 }
                 tapped = true;
                 tap_timer = record -> event.time + TAPPING_TERM;
