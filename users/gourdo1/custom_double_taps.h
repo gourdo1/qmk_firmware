@@ -29,7 +29,7 @@ static bool process_capsnum(uint16_t keycode, keyrecord_t * record) {
                 // Set that the first tap occurred in a potential double tap
                 tapped = true;
                 tap_timer = record -> event.time + TAPPING_TERM;
-                layer_on(_NUMPADMOUSE);
+                layer_move(_NUMPADMOUSE);
             } else if (!toggled) {
                 // If not currently toggled, turn off on key release
                 layer_off(_NUMPADMOUSE);
