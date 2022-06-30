@@ -420,7 +420,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         if (user_config.disable_space_mods) {
             // Initialize a boolean variable that keeps track of the space key status: registered or not?
             static bool spckey_registered;
-            //static bool spc2key_registered;
             if (record -> event.pressed) {
                 // Detect the activation of either ctrl keys
                 if (mod_state & MOD_MASK_CTRL) {
@@ -457,38 +456,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
             }
         }
         break;
-
-/*
-    // Treat Shift+Space as if regular Space
-    case KC_SHIFTSPC:
-        if (user_config.disable_space_mods) {
-            // Initialize a boolean variable that keeps track of the space key status: registered or not?
-            static bool spc2key_registered;
-            if (record -> event.pressed) {
-                // Detect the activation of either shift keys
-                if (mod_state & MOD_MASK_SHIFT) {
-                    // First temporarily canceling both shifts so that
-                    // shift isn't applied to the KC_SPC keycode
-                    del_mods(MOD_MASK_SHIFT);
-                    register_code(KC_SPC);
-                    // Update the boolean variable to reflect the status of KC_SPC
-                    spc2key_registered = true;
-                    // Reapplying modifier state so that the held shift key(s)
-                    // still work even after having tapped the Space key.
-                    set_mods(mod_state);
-                    return false;
-                }
-            } else { // on release of KC_SPC
-                // In case KC_SPC is still being sent even after the release of KC_SPC
-                if (spc2key_registered) {
-                    unregister_code(KC_SPC);
-                    spc2key_registered = false;
-                    return false;
-                }
-            }
-        }
-    break;
-*/
 
     // INS as SHIFT-modified BackSpace key
     case KC_BSPC: {
