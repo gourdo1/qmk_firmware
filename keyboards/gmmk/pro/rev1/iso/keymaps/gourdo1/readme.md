@@ -8,7 +8,7 @@ This Windows-centric ISO layout is based on [Jonavin's](https://github.com/qmk/q
 
 ### Core Functionality
 
-* ISO layout (added July xx, 2022)
+* ISO layout (added July 1, 2022)
 * Quick & Easy Customization: Open a text editor and hit [FN]` (tilde key) to view toggle-able features. (added Jun 29, 2022)
 * [VIA](https://www.caniusevia.com/) support enabled (added Mar 16, 2022)
 * Most [default Glorious shortcuts](https://cdn.shopify.com/s/files/1/0549/2681/files/GMMK_Pro_User_Guide.pdf) enabled
