@@ -129,6 +129,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
     if (!process_record_keymap(keycode, record)) { return false; }
     if (!process_capsnum(keycode, record)) { return false; }
     if (!process_esc_to_base(keycode, record)) { return false; }
+    if (!process_lsft_for_caps(keycode, record)) { return false; }
 
     // Key macros ...
     switch (keycode) {
