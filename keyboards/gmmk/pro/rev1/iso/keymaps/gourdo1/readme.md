@@ -16,6 +16,7 @@ These Windows-centric layouts are based on [Jonavin's](https://github.com/qmk/qm
 * Support for both [ANSI](https://keebnews.com/ansi-vs-iso/) and [ISO](https://keebnews.com/ansi-vs-iso/) keyboard layouts.
 * Quick & Easy Customization: Open a text editor and hit [FN]` (the key left of '1' on ISO layouts) to view toggle-able settings.
 * [VIA](https://www.caniusevia.com/) support enabled.
+* AutoCorrection:  Pascal Getreuer's AutoCorrect code incorporated with 400 word dictionary on words > 4 characters.
 * Most [default Glorious shortcuts](https://cdn.shopify.com/s/files/1/0549/2681/files/GMMK_Pro_User_Guide.pdf) enabled
 * [N-key Rollover](https://en.wikipedia.org/wiki/Rollover_\(keyboard\)#n-key_rollover) (NKRO) -- toggled with [FN]R
 * 1000Hz polling rate with 5ms debounce time for quick response in games.
