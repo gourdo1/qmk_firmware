@@ -73,29 +73,49 @@ static bool process_esc_to_base(uint16_t keycode, keyrecord_t * record) {
 }
 
 static bool process_lsft_for_caps(uint16_t keycode, keyrecord_t * record) {
+    // static bool toggled = false;
     static bool tapped = false;
     static uint16_t tap_timer = 0;
-
+    led_t led_state = host_keyboard_led_state();
     if (keycode == KC_LSFT) {
         if (user_config.double_tap_shift_for_capslock) {
-          if (!keymap_config.no_gui) {
-            if (record->event.pressed) {
-                if (tapped && !timer_expired(record->event.time, tap_timer)) {
-                  // The key was double tapped.
-                  //clear_mods();  // If needed, clear the mods.
-                  // Do something interesting...
-                  register_code(KC_CAPS);
+            if (!keymap_config.no_gui) {
+                if (record -> event.pressed) { // SHIFT pressed
+                    // Check whether the key was recently tapped
+                    if (!led_state.caps_lock && tapped && !timer_expired(record -> event.time, tap_timer)) {
+                        // This is a double tap (or possibly a triple tap or more)
+                        // CAPS LOCK (on)
+                        register_code(KC_CAPS);
+                        // toggled = true;
+                    } else if (led_state.caps_lock) {
+                        // Single tap OK for toggling CAPS LOCK off
+                        // toggled = false;
+                        tapped = false;
+                        register_code(KC_CAPS);
+                    } else {
+                        register_code(KC_LSFT);
+                    }
+                    // Set that the first tap occurred in a potential double tap
+                    tapped = true;
+                    tap_timer = record -> event.time + TAPPING_TERM;
+                } else {
+                    // Let go of CAPS LOCK
+                    unregister_code(KC_CAPS);
+                    unregister_code(KC_LSFT);
                 }
-                tapped = true;
-                tap_timer = record->event.time + TAPPING_TERM;
-            } else {
-                unregister_code(KC_CAPS);
             }
-          }
+        } else {
+             // Act as KC_LSFT
+            if (record -> event.pressed) {
+                register_code(KC_LSFT);
+            } else {
+                unregister_code(KC_LSFT);
+            }
         }
+        return false;
     } else {
-            // On an event with any other key, reset the double tap state.
-            tapped = false;
+        // On an event with any other key, reset the double tap state
+        tapped = false;
     }
     return true;
 }
