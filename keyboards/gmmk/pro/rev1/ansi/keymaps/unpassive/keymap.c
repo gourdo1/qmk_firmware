@@ -284,12 +284,12 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 			}
 			rgb_matrix_set_color(LED_L7, RGB_CHARTREUSE);
 			rgb_matrix_set_color(LED_L8, RGB_CHARTREUSE);
-			rgb_matrix_set_color(LED_LSFT, RGB_CHARTREUSE);
+			rgb_matrix_set_color(LED_RSFT, RGB_CHARTREUSE);
 		}
 		else {
 			rgb_matrix_set_color(LED_L7, RGB_CHARTREUSE);
 			rgb_matrix_set_color(LED_L8, RGB_CHARTREUSE);
-			rgb_matrix_set_color(LED_LSFT, RGB_CHARTREUSE);
+			rgb_matrix_set_color(LED_RSFT, RGB_CHARTREUSE);
 		}
 	}
 
