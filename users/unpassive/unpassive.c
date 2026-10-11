@@ -359,12 +359,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
 	case ENCFUNC:
 		if (user_config.encoder_press_mute_or_media) {
 			if (record -> event.pressed) {
-				register_code(KC_MPLY);
+				tap_code(KC_MPLY);
 			} else unregister_code16(keycode);
 		}
 		else {
 			if (record -> event.pressed) {
-				register_code(KC_MUTE);
+				tap_code(KC_MUTE);
 			} else unregister_code16(keycode);
 		}
 		break;
