@@ -104,7 +104,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
 	if (!process_record_keymap(keycode, record)) { return false; }
 	if (!process_capsnum(keycode, record)) { return false; }
 	if (!process_esc_to_base(keycode, record)) { return false; }
-	if (!process_lsft_for_caps(keycode, record)) { return false; }
+	if (!process_rsft_for_caps(keycode, record)) { return false; }
 	if (!process_autocorrection(keycode, record)) { return false; }
 
 	// Key macros ...
@@ -147,7 +147,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
 			} else {
 				send_string(SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_0)SS_TAP(X_KP_9)SS_TAP(X_KP_1))"DEL on F13"SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_0)SS_TAP(X_KP_5)SS_TAP(X_KP_9))" HOME right of BKSPC" SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_0)SS_TAP(X_KP_9)SS_TAP(X_KP_3))"\n");
 			}
-			send_string("5. Numpad on CapsLock"SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_0)SS_TAP(X_KP_5)SS_TAP(X_KP_9))" double tap LSHIFT for Caps... ");
+			send_string("5. Numpad on CapsLock"SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_0)SS_TAP(X_KP_5)SS_TAP(X_KP_9))" double tap RSHIFT for Caps... ");
 			if (user_config.double_tap_shift_for_capslock) {
 				send_string(SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_0)SS_TAP(X_KP_9)SS_TAP(X_KP_1))"ON" SS_LALT(SS_TAP(X_KP_0)SS_TAP(X_KP_0)SS_TAP(X_KP_9)SS_TAP(X_KP_3))"\n");
 			} else {

@@ -72,11 +72,11 @@ static bool process_esc_to_base(uint16_t keycode, keyrecord_t * record) {
 	return true;
 }
 
-static bool process_lsft_for_caps(uint16_t keycode, keyrecord_t * record) {
+static bool process_rsft_for_caps(uint16_t keycode, keyrecord_t * record) {
 	static bool tapped = false;
 	static uint16_t tap_timer = 0;
 
-	if (keycode == KC_LSFT) {
+	if (keycode == KC_RSFT) {
 		if (user_config.double_tap_shift_for_capslock) {
 		  if (!keymap_config.no_gui) {
 			if (record->event.pressed) {

@@ -25,7 +25,7 @@ These Windows-centric layouts are based on gourdo1's fork of Jonavin's GMMK Pro 
 * Gaming mode ([FN]Win-key) locks out Win-key and double-tap Shift Capslock; Also RGB highlights WSAD and nearby gaming keys.
 * Caps Word enabled: To capitalize the next word only, press and release left and right shift at the same time.
 * Multi-monitor app moving shortcuts: [FN] ],[ (square brackets) to move current app window to next monitor.
-* Capslock toggled by double tap of Left Shift key or FN + Capslock (RGB green highlighted).
+* Capslock toggled by double tap of Right Shift key or FN + Capslock (RGB green highlighted).
 * Paddle game accessible via [FN]P. Hit [FN]P again or double tap [ESC] to exit.
 * Single-handed shortcut for Ctrl-Alt-Delete: [FN]/
 * Single-handed shortcut for WinKey-L (lock Windows): [FN]L
@@ -47,7 +47,7 @@ These Windows-centric layouts are based on gourdo1's fork of Jonavin's GMMK Pro 
     2. Numpad RGB - Highlight under numpad layer keys
     3. ESC key - Double tap ESC key to go to base layer
     4. Swap DEL and HOME - Default is DEL to the right of BKSPC & HOME is above BKSPC
-    5. Capslock function - Toggle between double tap LShift for CapsLock with Numpad on CapsLock key (default) and standard CapsLock
+    5. Capslock function - Toggle between double tap RShift for CapsLock with Numpad on CapsLock key (default) and standard CapsLock
     6. Encoder button - Default mutes volume; alternate plays/pauses media
     7. Insert function - Toggle between SHIFT-BKSPC and SHIFT-DEL
     8. Modded-Space override - Use standard Space in place of modded-Space functions
